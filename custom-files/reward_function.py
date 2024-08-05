@@ -77,7 +77,7 @@ def reward_function(params):
             pass
            
 # Steering penality threshold, change the number based on your action space setting
-    ABS_STEERING_THRESHOLD = 30
+    ABS_STEERING_THRESHOLD = 25
 # Penalize reward if the car is steering too much
     if steering_angle > ABS_STEERING_THRESHOLD:
         reward *= 0.8
@@ -89,14 +89,14 @@ def reward_function(params):
     reward += -lateral_acceleration * penalty_factor
 
 # Simple friction model
-    grip_factor = 1 - (distance_from_center / track_width)  
+#    grip_factor = 1 - (distance_from_center / track_width)  
 # Penalize based on lateral force (steering angle and speed)
-    lateral_force = abs(steering_angle) * speed    
+#    lateral_force = abs(steering_angle) * speed    
 # Reward maintaining traction
-    reward += grip_factor - lateral_force * penalty_factor
+#    reward += grip_factor - lateral_force * penalty_factor
 
 # Penalty for going off track
     if is_offtrack:
         reward -= 1.0
         
-    return float(reward)
+return float(reward)
