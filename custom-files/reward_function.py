@@ -99,4 +99,4 @@ def reward_function(params):
     if is_offtrack:
         reward -= 1.0
 
-return float(reward)
+    return float(reward)
