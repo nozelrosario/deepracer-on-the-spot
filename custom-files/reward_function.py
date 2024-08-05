@@ -82,11 +82,11 @@ def reward_function(params):
     if steering_angle > ABS_STEERING_THRESHOLD:
         reward *= 0.8
 
-    penalty_factor = 1
+#    penalty_factor = 1
 # Calculate lateral acceleration (simple model: speed^2 * steering angle)
-    lateral_acceleration = speed ** 2 * abs(steering_angle)    
+#    lateral_acceleration = speed ** 2 * abs(steering_angle)    
 # Penalize high lateral acceleration
-    reward += -lateral_acceleration * penalty_factor
+#    reward += -lateral_acceleration * penalty_factor
 
 # Simple friction model
 #    grip_factor = 1 - (distance_from_center / track_width)  
