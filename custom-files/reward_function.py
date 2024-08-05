@@ -97,6 +97,6 @@ def reward_function(params):
 
 # Penalty for going off track
     if is_offtrack:
-        reward -= 1.0
+        reward -= distance_from_center
 
     return float(reward)
