@@ -58,16 +58,16 @@ def reward_function(params):
 
 # Reward Boost for progress
     progress_dict = {
-        10: 10,
-        20: 20,
-        30: 40,
-        40: 80,
-        50: 160,
-        60: 320,
-        70: 640,
-        80: 1280,
-        90: 2560,
-        100: 5120
+        10: 1.0,
+        20: 2.0,
+        30: 4.0,
+        40: 8.0,
+        50: 16.0,
+        60: 32.0,
+        70: 64.0,
+        80: 128.0,
+        90: 256.0,
+        100: 512.0
     }
     int_progress = int(progress)
     if int_progress % 10 == 0:
@@ -75,25 +75,6 @@ def reward_function(params):
             reward += progress_dict[int_progress]
         except:
             pass
-           
-# Steering penality threshold, change the number based on your action space setting
-    ABS_STEERING_THRESHOLD = 12
-# Penalize reward if the car is steering too much
-    if steering_angle > ABS_STEERING_THRESHOLD:
-        reward *= 0.8
-
-#    penalty_factor = 1
-# Calculate lateral acceleration (simple model: speed^2 * steering angle)
-#    lateral_acceleration = speed ** 2 * abs(steering_angle)    
-# Penalize high lateral acceleration
-#    reward += -lateral_acceleration * penalty_factor
-
-# Simple friction model
-#    grip_factor = 1 - (distance_from_center / track_width)  
-# Penalize based on lateral force (steering angle and speed)
-#    lateral_force = abs(steering_angle) * speed    
-# Reward maintaining traction
-#    reward += grip_factor - lateral_force * penalty_factor
 
 # Penalty for going off track
     if is_offtrack:
