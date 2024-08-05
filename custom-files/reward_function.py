@@ -24,6 +24,7 @@ def reward_function(params):
     "track_width": float,                  # width of the track
     "waypoints": [(float, float), ]        # list of (x,y) as milestones along the track center
     '''
+# print(reward_function({"distance_from_center": 100, "track_width": 50,"steering_angle": 20,"progress": 0.5,"steps": 5,"speed": 100,"is_offtrack": 'false', "all_wheels_on_track": 'true'}))
     
  # Read input parameters
     distance_from_center = params['distance_from_center']
@@ -33,6 +34,7 @@ def reward_function(params):
     speed = params['speed']
     steps = params['steps']
     is_offtrack = params['is_offtrack']
+    all_wheels_on_track = params['all_wheels_on_track']
 
 # Reward for staying on the track
     reward = 1.0 if all_wheels_on_track else -1.0
@@ -49,16 +51,33 @@ def reward_function(params):
     elif distance_from_center <= marker_3:
         reward += 0.1
     else:
-        reward -= 1.0
+        reward = 1e-3  # likely crashed/ close to off track
 
 # Reward for speed
     reward += speed / 4.0
 
-# Reward for Progress
-    reward += progress
+# Reward Boost for progress
+    progress_dict = {
+        10: 10,
+        20: 20,
+        30: 40,
+        40: 80,
+        50: 160,
+        60: 320,
+        70: 640,
+        80: 1280,
+        90: 2560,
+        100: 5120
+    }
+    int_progress = int(progress)
+    if int_progress % 10 == 0:
+        try:
+            reward += progress_dict[int_progress]
+        except:
+            pass
            
 # Steering penality threshold, change the number based on your action space setting
-    ABS_STEERING_THRESHOLD = 15
+    ABS_STEERING_THRESHOLD = 30
 # Penalize reward if the car is steering too much
     if steering_angle > ABS_STEERING_THRESHOLD:
         reward *= 0.8
